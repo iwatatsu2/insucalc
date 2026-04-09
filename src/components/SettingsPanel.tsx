@@ -62,7 +62,7 @@ export default function SettingsPanel({ settings, onUpdate, onClose }: Props) {
         <Field label="CIR（炭水化物/インスリン比）" value={settings.cir} onChange={v => onUpdate({ cir: v })} min={1} max={30} hint="炭水化物何gで1単位" />
         <Field label="ISF（インスリン効果値）" value={settings.isf} onChange={v => onUpdate({ isf: v })} min={10} max={200} hint="1単位で何mg/dL下がるか" />
         <Field label="1日総インスリン量（TDD）" value={settings.tdd} onChange={v => onUpdate({ tdd: v, isf: Math.round(1700 / v) })} min={5} max={200} hint="単位/日" />
-        <Field label="1日ベーサル量" value={settings.basalDose} onChange={v => onUpdate({ basalDose: v })} min={0} max={100} />
+        <Field label="1日ベーサルインスリン量" value={settings.basalDose} onChange={v => onUpdate({ basalDose: v })} min={0} max={100} hint="単位/日" />
         <Field label="目標血糖値" value={settings.targetBg} onChange={v => onUpdate({ targetBg: v })} min={70} max={180} hint="mg/dL" />
 
         <div style={{
