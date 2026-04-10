@@ -243,6 +243,59 @@ export default function App() {
           </ul>
         </section>
 
+        {/* T1Life セクション */}
+        <div style={{ marginTop: 24 }}>
+          {/* セクション見出し */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 12 }}>
+            <div style={{ flex: 1, height: 1, background: '#E2E8F0' }} />
+            <span style={{ fontSize: 11, fontWeight: 700, color: '#94A3B8', letterSpacing: '0.08em', whiteSpace: 'nowrap' }}>1型糖尿病コミュニティ</span>
+            <div style={{ flex: 1, height: 1, background: '#E2E8F0' }} />
+          </div>
+
+          <a
+            href="https://t1life.vercel.app"
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{ display: 'block', textDecoration: 'none' }}
+          >
+            <div style={{
+              background: '#fff',
+              border: '1.5px solid #E2E8F0',
+              borderRadius: 18,
+              padding: '16px',
+              boxShadow: '0 2px 8px rgba(0,0,0,0.06)',
+              display: 'flex', alignItems: 'center', gap: 14,
+            }}>
+              {/* T1ロゴ */}
+              <div style={{ position: 'relative', width: 44, height: 44, flexShrink: 0 }}>
+                <div style={{
+                  position: 'absolute', inset: 0,
+                  background: '#2563EB', borderRadius: 12,
+                  transform: 'rotate(6deg)', opacity: 0.25,
+                }} />
+                <div style={{
+                  position: 'relative', width: 44, height: 44,
+                  background: 'linear-gradient(135deg, #3B82F6, #4F46E5)',
+                  borderRadius: 12,
+                  display: 'flex', alignItems: 'center', justifyContent: 'center',
+                  boxShadow: '0 4px 12px rgba(37,99,235,0.3)',
+                }}>
+                  <span style={{ color: '#fff', fontSize: 12, fontWeight: 900, letterSpacing: '-0.5px' }}>T1</span>
+                </div>
+              </div>
+
+              <div style={{ flex: 1 }}>
+                <div style={{ fontSize: 15, fontWeight: 900, color: '#1E293B', letterSpacing: '-0.2px' }}>
+                  T1<span style={{ color: '#2563EB' }}>Life</span>
+                </div>
+                <div style={{ fontSize: 11, color: '#64748B', marginTop: 2 }}>1型糖尿病の仲間とつながるコミュニティ</div>
+              </div>
+
+              <span style={{ fontSize: 16, color: '#CBD5E1' }}>↗</span>
+            </div>
+          </a>
+        </div>
+
       </div>
 
       {/* 下部ボタン */}

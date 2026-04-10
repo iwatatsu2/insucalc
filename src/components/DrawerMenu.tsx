@@ -17,6 +17,7 @@ const MENU_ITEMS = [
 
 const T1LIFE_URL = 'https://t1life.vercel.app';
 
+
 export default function DrawerMenu({ isOpen, onClose, onNavigate, currentPage }: Props) {
   // スクロール禁止
   useEffect(() => {
