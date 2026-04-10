@@ -362,7 +362,12 @@ export default function FoodSelector({ onChange }: Props) {
                   borderBottom: i < searchResults.length - 1 ? '1px solid #F1F5F9' : 'none',
                   color: '#1E293B', cursor: 'pointer', textAlign: 'left',
                 }}>
-                  <span style={{ fontSize: 14 }}>{food.name}</span>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+                    <span style={{ fontSize: 14 }}>{food.name}</span>
+                    <span style={{ fontSize: 10, color: '#94A3B8' }}>
+                      {food.source === '八訂' ? '出典: 日本食品標準成分表2020年版（八訂）文部科学省' : '出典: 推計値'}
+                    </span>
+                  </div>
                   <span style={{ fontSize: 13, color: '#2563EB', fontWeight: 700, flexShrink: 0, marginLeft: 8 }}>
                     炭水化物 {food.carbs}g
                   </span>
@@ -374,6 +379,10 @@ export default function FoodSelector({ onChange }: Props) {
           {!search && !activeCategory && (
             <p style={{ textAlign: 'center', color: '#CBD5E1', fontSize: 13, marginTop: 8 }}>カテゴリを選択または検索してください</p>
           )}
+          <p style={{ fontSize: 10, color: '#94A3B8', textAlign: 'center', marginTop: 8, lineHeight: 1.6 }}>
+            炭水化物量: 日本食品標準成分表2020年版（八訂）文部科学省 に基づく<br />
+            「たれなし」表記は純食材の値。たれ・衣を使用する場合は実際より高くなります。
+          </p>
         </div>
       )}
 
