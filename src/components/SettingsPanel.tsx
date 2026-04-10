@@ -59,7 +59,34 @@ export default function SettingsPanel({ settings, onUpdate, onClose }: Props) {
           }}>×</button>
         </div>
 
-        <Field label="CIR（炭水化物/インスリン比）" value={settings.cir} onChange={v => onUpdate({ cir: v })} min={1} max={30} hint="炭水化物何gで1単位" />
+        {/* CIR 朝・昼・夜 */}
+        <div style={{ marginBottom: 20 }}>
+          <div style={{ fontSize: 13, color: '#475569', fontWeight: 700, marginBottom: 10 }}>CIR（炭水化物/インスリン比）</div>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+            {([
+              { key: 'cirMorning', label: '🌅 朝（5〜10時）' },
+              { key: 'cirNoon',    label: '☀️ 昼（11〜16時）' },
+              { key: 'cirEvening', label: '🌙 夜（17〜翌4時）' },
+            ] as { key: keyof typeof settings; label: string }[]).map(({ key, label }) => (
+              <div key={key} style={{ display: 'flex', alignItems: 'center', gap: 12, background: '#F8FAFC', borderRadius: 12, padding: '10px 14px', border: '1.5px solid #E2E8F0' }}>
+                <span style={{ fontSize: 13, color: '#475569', fontWeight: 600, flex: 1, whiteSpace: 'nowrap' }}>{label}</span>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                  <button onClick={() => onUpdate({ [key]: Math.max(1, (settings[key] as number) - 1) })} style={{ width: 32, height: 32, borderRadius: 8, border: '1.5px solid #E2E8F0', background: '#fff', fontSize: 18, color: '#64748B', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>−</button>
+                  <input
+                    type="number"
+                    value={settings[key] as number}
+                    min={1} max={30}
+                    onChange={e => onUpdate({ [key]: parseFloat(e.target.value) || 1 })}
+                    inputMode="decimal"
+                    style={{ width: 52, textAlign: 'center', padding: '6px', borderRadius: 8, border: '1.5px solid #BFDBFE', background: '#EFF6FF', color: '#2563EB', fontSize: 18, fontWeight: 800, outline: 'none' }}
+                  />
+                  <button onClick={() => onUpdate({ [key]: Math.min(30, (settings[key] as number) + 1) })} style={{ width: 32, height: 32, borderRadius: 8, border: '1.5px solid #E2E8F0', background: '#fff', fontSize: 18, color: '#64748B', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>＋</button>
+                </div>
+              </div>
+            ))}
+          </div>
+          <div style={{ fontSize: 11, color: '#94A3B8', marginTop: 6, paddingLeft: 2 }}>炭水化物何gにつきインスリン1単位</div>
+        </div>
         <Field label="ISF（インスリン効果値）" value={settings.isf} onChange={v => onUpdate({ isf: v })} min={10} max={200} hint="1単位で何mg/dL下がるか" />
         <Field label="1日総インスリン量（TDD）" value={settings.tdd} onChange={v => onUpdate({ tdd: v, isf: Math.round(1700 / v) })} min={5} max={200} hint="単位/日" />
         <Field label="1日ベーサルインスリン量" value={settings.basalDose} onChange={v => onUpdate({ basalDose: v })} min={0} max={100} hint="単位/日" />

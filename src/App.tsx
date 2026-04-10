@@ -13,6 +13,21 @@ function roundToHalf(n: number): number {
   return Math.round(n * 2) / 2;
 }
 
+type MealTime = 'morning' | 'noon' | 'evening';
+
+function getMealTime(): MealTime {
+  const h = new Date().getHours();
+  if (h >= 5 && h <= 10) return 'morning';
+  if (h >= 11 && h <= 16) return 'noon';
+  return 'evening';
+}
+
+const MEAL_TIME_LABEL: Record<MealTime, string> = {
+  morning: '朝',
+  noon: '昼',
+  evening: '夜',
+};
+
 type Page = 'home' | 'guide' | 'history' | 'settings' | 'about';
 
 export default function App() {
@@ -27,9 +42,13 @@ export default function App() {
   const [currentBg, setCurrentBg] = useState<string>('');
   const [saved, setSaved] = useState(false);
   const [resetKey, setResetKey] = useState(0);
+  const [mealTime, setMealTime] = useState<MealTime>(getMealTime());
+
+  const cirKey = `cir${mealTime.charAt(0).toUpperCase()}${mealTime.slice(1)}` as 'cirMorning' | 'cirNoon' | 'cirEvening';
+  const cir = settings[cirKey];
 
   const bg = parseFloat(currentBg) || 0;
-  const mealBolus = totalCarbs > 0 ? totalCarbs / settings.cir : 0;
+  const mealBolus = totalCarbs > 0 ? totalCarbs / cir : 0;
   const rawCorrection = bg > 0 ? (bg - settings.targetBg) / settings.isf : 0;
   const correctionBolus = Math.max(0, rawCorrection);
   const totalBolus = roundToHalf(mealBolus + correctionBolus);
@@ -117,10 +136,29 @@ export default function App() {
       </header>
 
       <div style={{ padding: '16px 16px 100px' }}>
+        {/* 時間帯セレクター */}
+        <div style={{ display: 'flex', gap: 6, marginBottom: 12, background: '#fff', borderRadius: 14, padding: 4, boxShadow: '0 2px 6px rgba(0,0,0,0.07)' }}>
+          {(['morning', 'noon', 'evening'] as MealTime[]).map(t => (
+            <button
+              key={t}
+              onClick={() => setMealTime(t)}
+              style={{
+                flex: 1, padding: '8px 4px', borderRadius: 10, border: 'none', cursor: 'pointer',
+                background: mealTime === t ? '#2563EB' : 'transparent',
+                color: mealTime === t ? '#fff' : '#64748B',
+                fontSize: 12, fontWeight: 700,
+                transition: 'all 0.15s',
+              }}
+            >
+              {MEAL_TIME_LABEL[t]}
+            </button>
+          ))}
+        </div>
+
         {/* パラメータ表示 */}
         <div style={{ display: 'flex', gap: 8, marginBottom: 16 }}>
           {[
-            { label: 'CIR', value: settings.cir, color: '#2563EB' },
+            { label: `CIR（${MEAL_TIME_LABEL[mealTime]}）`, value: cir, color: '#2563EB' },
             { label: 'ISF', value: settings.isf, color: '#7C3AED' },
             { label: '目標血糖', value: `${settings.targetBg}`, color: '#0EA5E9' },
           ].map(item => (

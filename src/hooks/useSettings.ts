@@ -2,7 +2,9 @@ import { useState, useEffect } from 'react';
 import type { UserSettings } from '../types';
 
 const DEFAULT: UserSettings = {
-  cir: 10,
+  cirMorning: 10,
+  cirNoon: 10,
+  cirEvening: 10,
   isf: 50,
   tdd: 30,
   targetBg: 100,
