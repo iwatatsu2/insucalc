@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 192">
+  <!-- 背景：白 -->
+  <rect width="192" height="192" rx="42" fill="#ffffff"/>
+
+  <!-- 注射器シルエット（シンプル） -->
+  <!-- 本体 -->
+  <rect x="54" y="82" width="84" height="28" rx="8" fill="#1E293B"/>
+  <!-- 先端ノズル -->
+  <rect x="138" y="90" width="16" height="12" rx="4" fill="#1E293B"/>
+  <!-- プランジャー -->
+  <rect x="38" y="78" width="18" height="36" rx="5" fill="#2563EB"/>
+  <!-- 目盛り線 -->
+  <rect x="76" y="87" width="3" height="18" rx="1.5" fill="white" opacity="0.5"/>
+  <rect x="90" y="87" width="3" height="18" rx="1.5" fill="white" opacity="0.5"/>
+  <rect x="104" y="87" width="3" height="18" rx="1.5" fill="white" opacity="0.5"/>
+  <rect x="118" y="87" width="3" height="18" rx="1.5" fill="white" opacity="0.5"/>
+
+  <!-- Insu テキスト -->
+  <text x="96" y="148" font-family="'Helvetica Neue', Arial, sans-serif" font-size="26" font-weight="900" fill="#1E293B" text-anchor="middle" letter-spacing="-0.5">Insu</text>
+  <!-- Calc テキスト -->
+  <text x="96" y="174" font-family="'Helvetica Neue', Arial, sans-serif" font-size="26" font-weight="900" fill="#2563EB" text-anchor="middle" letter-spacing="-0.5">Calc</text>
+</svg>
