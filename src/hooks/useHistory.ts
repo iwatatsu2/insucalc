@@ -18,7 +18,15 @@ export function useHistory() {
     setHistory(prev => [newEntry, ...prev].slice(0, 100));
   };
 
+  const updateEntry = (id: string, updates: Partial<HistoryEntry>) => {
+    setHistory(prev => prev.map(e => e.id === id ? { ...e, ...updates } : e));
+  };
+
+  const deleteEntry = (id: string) => {
+    setHistory(prev => prev.filter(e => e.id !== id));
+  };
+
   const clearHistory = () => setHistory([]);
 
-  return { history, addEntry, clearHistory };
+  return { history, addEntry, updateEntry, deleteEntry, clearHistory };
 }

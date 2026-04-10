@@ -32,7 +32,7 @@ type Page = 'home' | 'guide' | 'history' | 'settings' | 'about';
 
 export default function App() {
   const { settings, updateSettings } = useSettings();
-  const { history, addEntry, clearHistory } = useHistory();
+  const { history, addEntry, updateEntry, deleteEntry, clearHistory } = useHistory();
 
   const [page, setPage] = useState<Page>('home');
   const [drawerOpen, setDrawerOpen] = useState(false);
@@ -226,6 +226,23 @@ export default function App() {
             />
           </section>
         )}
+        {/* 免責事項 */}
+        <section style={{
+          background: '#FEF9C3', border: '1px solid #FDE68A',
+          borderRadius: 16, padding: '14px 16px', marginTop: 4,
+        }}>
+          <div style={{ fontSize: 12, fontWeight: 800, color: '#92400E', marginBottom: 8, display: 'flex', alignItems: 'center', gap: 6 }}>
+            <span>⚠️</span> 免責事項・重要なお知らせ
+          </div>
+          <ul style={{ margin: 0, padding: '0 0 0 16px', fontSize: 11, color: '#78350F', lineHeight: 2.0 }}>
+            <li>本アプリは<strong>医療機器ではありません</strong>。計算結果は参考値であり、医療行為を構成するものではありません。</li>
+            <li>実際のインスリン投与量は、<strong>必ず担当医師の指示に従って</strong>決定してください。</li>
+            <li>CIR・ISF・目標血糖値は個人差が大きく、体調・運動・ストレス等により変動します。定期的に担当医と見直してください。</li>
+            <li>低血糖（&lt;70 mg/dL）時はインスリンを打たず、まず炭水化物を補食してください。</li>
+            <li>本アプリの利用により生じたいかなる健康被害についても、開発者は責任を負いません。</li>
+          </ul>
+        </section>
+
       </div>
 
       {/* 下部ボタン */}
@@ -264,7 +281,7 @@ export default function App() {
         <SettingsPanel settings={settings} onUpdate={updateSettings} onClose={() => setPage('home')} />
       )}
       {page === 'history' && (
-        <HistoryPanel history={history} onClear={clearHistory} onClose={() => setPage('home')} />
+        <HistoryPanel history={history} onUpdate={updateEntry} onDelete={deleteEntry} onClear={clearHistory} onClose={() => setPage('home')} />
       )}
     </div>
   );

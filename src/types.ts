@@ -18,4 +18,6 @@ export interface HistoryEntry {
   mealBolus: number;
   correctionBolus: number;
   totalBolus: number;
+  actualBolus?: number; // 実際に打った単位（修正後）
+  memo?: string;
 }
