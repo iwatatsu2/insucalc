@@ -16,20 +16,11 @@ export default function AboutPage({ onClose }: Props) {
     {
       emoji: '🌐',
       label: 'ホームページ',
-      handle: 'dr-iwatatsu.com',
-      url: 'https://dr-iwatatsu.com',
+      handle: 'driwatatsu.readdy.co',
+      url: 'https://driwatatsu.readdy.co/?utm_source=ig&utm_medium=social&utm_content=link_in_bio&fbclid=PAZXh0bgNhZW0CMTEAc3J0YwZhcHBfaWQMMjU2MjgxMDQwNTU4AAGnV-uPfQr7pidTj2QFA9yA1pp33uQnzGQh0YHHzAg5Bi-o7KlOqRL0CA8JMUc_aem_nT3t0BrMAZ3aJaAtQZmGHA',
       color: '#2563EB',
       bg: '#EFF6FF',
       border: '#BFDBFE',
-    },
-    {
-      emoji: '🐦',
-      label: 'X (Twitter)',
-      handle: '@dr_iwatatsu',
-      url: 'https://x.com/dr_iwatatsu',
-      color: '#0F172A',
-      bg: '#F8FAFC',
-      border: '#E2E8F0',
     },
   ];
 
@@ -67,17 +58,18 @@ export default function AboutPage({ onClose }: Props) {
         {/* イラスト＋名前 */}
         <div style={{ textAlign: 'center', position: 'relative', zIndex: 1 }}>
           <div style={{
-            width: 140, height: 140, margin: '0 auto 16px',
+            width: 150, height: 150, margin: '0 auto 16px',
             borderRadius: '50%',
-            border: '4px solid rgba(255,255,255,0.3)',
+            border: '4px solid rgba(255,255,255,0.5)',
             overflow: 'hidden',
-            background: 'rgba(255,255,255,0.1)',
+            background: '#ffffff',
             boxShadow: '0 8px 32px rgba(0,0,0,0.2)',
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
           }}>
             <img
               src="/dr-iwatatsu.png"
               alt="Dr いわたつ"
-              style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+              style={{ width: '100%', height: '100%', objectFit: 'contain', objectPosition: 'center top' }}
               onError={e => {
                 (e.target as HTMLImageElement).src = '/dr-iwatatsu.jpg';
               }}
