@@ -268,6 +268,51 @@ export const foodData: Record<string, FoodItem[]> = {
     // かき（甘がき）: 15.9g/100g（八訂）。1個=160g
     { name: "柿 1個（160g）", carbs: 25, category: "果物", tags: ["果物"], source: "官公庁DB" },
   ],
+
+  "おかず・主菜": [
+    // 肉類（炭水化物はほぼ0だが、たれ・衣で増える）
+    { name: "ステーキ（150g）", carbs: 0, category: "おかず・主菜", tags: ["肉", "和食", "洋食"], source: "官公庁DB" },
+    { name: "焼き肉（牛・150g）", carbs: 2, category: "おかず・主菜", tags: ["肉", "焼肉"], source: "推計" },
+    { name: "豚の生姜焼き 1人前", carbs: 8, category: "おかず・主菜", tags: ["肉", "和食"], source: "推計" },
+    { name: "豚カツ 1枚", carbs: 12, category: "おかず・主菜", tags: ["肉", "揚げ物", "和食"], source: "推計" },
+    { name: "唐揚げ 3個", carbs: 9, category: "おかず・主菜", tags: ["肉", "揚げ物", "和食"], source: "推計" },
+    { name: "鶏の照り焼き 1人前", carbs: 8, category: "おかず・主菜", tags: ["肉", "和食"], source: "推計" },
+    { name: "チキンソテー 1枚", carbs: 3, category: "おかず・主菜", tags: ["肉", "洋食"], source: "推計" },
+    { name: "ハンバーグ（単品）", carbs: 10, category: "おかず・主菜", tags: ["肉", "洋食"], source: "推計" },
+    { name: "餃子 6個", carbs: 18, category: "おかず・主菜", tags: ["肉", "中華"], source: "推計" },
+    { name: "酢豚 1人前", carbs: 20, category: "おかず・主菜", tags: ["肉", "中華"], source: "推計" },
+    // 魚介類
+    { name: "焼き魚（さば・さんま）", carbs: 0, category: "おかず・主菜", tags: ["魚", "和食"], source: "官公庁DB" },
+    { name: "焼き魚（鮭・1切れ）", carbs: 0, category: "おかず・主菜", tags: ["魚", "和食"], source: "官公庁DB" },
+    { name: "刺身 1人前", carbs: 1, category: "おかず・主菜", tags: ["魚", "和食"], source: "官公庁DB" },
+    { name: "煮魚 1人前", carbs: 5, category: "おかず・主菜", tags: ["魚", "和食"], source: "推計" },
+    { name: "天ぷら（魚・エビ）3個", carbs: 14, category: "おかず・主菜", tags: ["魚", "揚げ物", "和食"], source: "推計" },
+    { name: "エビフライ 2本", carbs: 12, category: "おかず・主菜", tags: ["魚", "揚げ物", "洋食"], source: "推計" },
+    { name: "アジフライ 1枚", carbs: 10, category: "おかず・主菜", tags: ["魚", "揚げ物", "和食"], source: "推計" },
+    { name: "サーモンムニエル 1切れ", carbs: 4, category: "おかず・主菜", tags: ["魚", "洋食"], source: "推計" },
+    { name: "マグロ刺身 5切れ", carbs: 0, category: "おかず・主菜", tags: ["魚", "和食"], source: "官公庁DB" },
+    { name: "焼きホタテ 3個", carbs: 4, category: "おかず・主菜", tags: ["魚", "和食"], source: "推計" },
+    // 卵・大豆
+    { name: "目玉焼き 1個", carbs: 0, category: "おかず・主菜", tags: ["卵", "和食", "洋食"], source: "官公庁DB" },
+    { name: "卵焼き 2切れ", carbs: 3, category: "おかず・主菜", tags: ["卵", "和食"], source: "推計" },
+    { name: "茶碗蒸し 1個", carbs: 4, category: "おかず・主菜", tags: ["卵", "和食"], source: "推計" },
+    { name: "冷奴 1丁", carbs: 2, category: "おかず・主菜", tags: ["大豆", "和食"], source: "官公庁DB" },
+    { name: "麻婆豆腐 1人前", carbs: 8, category: "おかず・主菜", tags: ["大豆", "中華"], source: "推計" },
+  ],
+
+  "副菜・汁物": [
+    { name: "味噌汁 1杯", carbs: 3, category: "副菜・汁物", tags: ["和食", "汁物"], source: "推計" },
+    { name: "豚汁 1杯", carbs: 8, category: "副菜・汁物", tags: ["和食", "汁物"], source: "推計" },
+    { name: "コンソメスープ 1杯", carbs: 2, category: "副菜・汁物", tags: ["洋食", "汁物"], source: "推計" },
+    { name: "サラダ（ドレッシングなし）", carbs: 3, category: "副菜・汁物", tags: ["野菜", "洋食"], source: "推計" },
+    { name: "ポテトサラダ", carbs: 12, category: "副菜・汁物", tags: ["野菜", "洋食"], source: "推計" },
+    { name: "おひたし（ほうれん草）", carbs: 1, category: "副菜・汁物", tags: ["野菜", "和食"], source: "官公庁DB" },
+    { name: "きんぴらごぼう", carbs: 8, category: "副菜・汁物", tags: ["野菜", "和食"], source: "推計" },
+    { name: "ひじきの煮物", carbs: 6, category: "副菜・汁物", tags: ["野菜", "和食"], source: "推計" },
+    { name: "かぼちゃの煮物", carbs: 14, category: "副菜・汁物", tags: ["野菜", "和食"], source: "推計" },
+    { name: "漬物（少量）", carbs: 2, category: "副菜・汁物", tags: ["野菜", "和食"], source: "推計" },
+    { name: "枝豆 1袋（100g）", carbs: 5, category: "副菜・汁物", tags: ["豆", "和食"], source: "官公庁DB" },
+  ],
 };
 
 export const allFoods: FoodItem[] = Object.values(foodData).flat();
