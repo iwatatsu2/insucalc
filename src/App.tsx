@@ -6,6 +6,7 @@ import HistoryPanel from './components/HistoryPanel';
 import GuidePage from './components/GuidePage';
 import AboutPage from './components/AboutPage';
 import DrawerMenu from './components/DrawerMenu';
+import HypoPanel from './components/HypoPanel';
 import { useSettings } from './hooks/useSettings';
 import { useHistory } from './hooks/useHistory';
 
@@ -36,6 +37,7 @@ export default function App() {
 
   const [page, setPage] = useState<Page>('home');
   const [drawerOpen, setDrawerOpen] = useState(false);
+  const [hypoOpen, setHypoOpen] = useState(false);
 
   const [totalCarbs, setTotalCarbs] = useState(0);
   const [foodSummary, setFoodSummary] = useState<string[]>([]);
@@ -133,6 +135,14 @@ export default function App() {
             <span style={{ fontSize: 17, fontWeight: 900, color: '#2563EB' }}>Calc</span>
           </div>
         </div>
+        <button onClick={() => setHypoOpen(true)} style={{
+          background: '#FEF2F2', border: '1.5px solid #FECACA', borderRadius: 10,
+          padding: '6px 10px', cursor: 'pointer',
+          fontSize: 12, fontWeight: 800, color: '#DC2626',
+          display: 'flex', alignItems: 'center', gap: 4,
+        }}>
+          🍬 低血糖？
+        </button>
       </header>
 
       <div style={{ padding: '16px 16px 100px' }}>
@@ -224,7 +234,7 @@ export default function App() {
               totalBolus={totalBolus}
               currentBg={bg}
               warning={warning}
-              onHypoGuide={() => setPage('guide')}
+              onHypoGuide={() => setHypoOpen(true)}
             />
           </section>
         )}
@@ -338,6 +348,7 @@ export default function App() {
       {page === 'history' && (
         <HistoryPanel history={history} onUpdate={updateEntry} onDelete={deleteEntry} onClear={clearHistory} onClose={() => setPage('home')} />
       )}
+      {hypoOpen && <HypoPanel onClose={() => setHypoOpen(false)} />}
     </div>
   );
 }
