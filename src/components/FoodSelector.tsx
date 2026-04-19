@@ -126,7 +126,7 @@ interface Props {
 }
 
 export default function FoodSelector({ onChange }: Props) {
-  const [tab, setTab] = useState<'staple' | 'side'>('staple');
+  const [tab, setTab] = useState<'staple' | 'side' | 'set'>('staple');
 
   // 主食: key → grams (0=未選択)
   const [stapleGrams, setStapleGrams] = useState<Record<StapleKey, number>>({ rice: 0, bread: 0, noodle: 0 });
@@ -137,12 +137,14 @@ export default function FoodSelector({ onChange }: Props) {
   const [search, setSearch] = useState('');
   const [activeCategory, setActiveCategory] = useState<string | null>(null);
 
-  const STAPLE_CATEGORIES = ["主食", "おにぎり・パン", "菓子パン・軽食", "麺類", "丼・定食", "ファストフード", "コンビニ食品"];
-  const allSideCategories = Object.keys(foodData).filter(k => !STAPLE_CATEGORIES.includes(k));
+  const SET_CATEGORIES = ["主食", "おにぎり・パン", "菓子パン・軽食", "麺類", "丼・定食", "ファストフード", "コンビニ食品"];
+  const allSideCategories = Object.keys(foodData).filter(k => !SET_CATEGORIES.includes(k));
+  const allSetCategories = SET_CATEGORIES.filter(k => foodData[k]);
 
-  const sideOnlyFoods = allSideCategories.flatMap(k => foodData[k]);
+  const currentFoods = tab === 'side' ? allSideCategories : allSetCategories;
+  const currentFoodsFlat = currentFoods.flatMap(k => foodData[k]);
   const searchResults = search.trim()
-    ? sideOnlyFoods.filter(f =>
+    ? currentFoodsFlat.filter(f =>
         f.name.includes(search) || f.tags.some(t => t.includes(search))
       ).slice(0, 20)
     : activeCategory ? foodData[activeCategory] : [];
@@ -192,8 +194,9 @@ export default function FoodSelector({ onChange }: Props) {
         {[
           { key: 'staple', label: '🍚 主食', sub: `${stapleCarbs}g` },
           { key: 'side',   label: '🍱 おかず', sub: `${sideCarbs}g` },
+          { key: 'set',    label: '🍛 セット', sub: '' },
         ].map(t => (
-          <button key={t.key} onClick={() => setTab(t.key as 'staple' | 'side')} style={{
+          <button key={t.key} onClick={() => { setTab(t.key as 'staple' | 'side' | 'set'); setActiveCategory(null); setSearch(''); }} style={{
             flex: 1, padding: '10px 8px', borderRadius: 14,
             border: `1.5px solid ${tab === t.key ? '#2563EB' : '#E2E8F0'}`,
             background: tab === t.key ? '#EFF6FF' : '#fff',
@@ -202,7 +205,7 @@ export default function FoodSelector({ onChange }: Props) {
             display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 2,
           }}>
             <span>{t.label}</span>
-            <span style={{ fontSize: 11, fontWeight: 600, opacity: 0.7 }}>炭水化物 {t.sub}</span>
+            {t.sub && <span style={{ fontSize: 11, fontWeight: 600, opacity: 0.7 }}>炭水化物 {t.sub}</span>}
           </button>
         ))}
       </div>
@@ -300,12 +303,12 @@ export default function FoodSelector({ onChange }: Props) {
         </div>
       )}
 
-      {/* おかずタブ */}
-      {tab === 'side' && (
+      {/* おかず・セットタブ */}
+      {(tab === 'side' || tab === 'set') && (
         <div>
           {selectedSides.length > 0 && (
             <div style={{ marginBottom: 12, padding: '12px 14px', background: '#EFF6FF', borderRadius: 14, border: '1.5px solid #BFDBFE' }}>
-              <div style={{ fontSize: 11, color: '#3B82F6', fontWeight: 700, marginBottom: 8 }}>選択中のおかず</div>
+              <div style={{ fontSize: 11, color: '#3B82F6', fontWeight: 700, marginBottom: 8 }}>選択中</div>
               {selectedSides.map((f, i) => (
                 <div key={i} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '5px 0', borderBottom: i < selectedSides.length - 1 ? '1px solid #DBEAFE' : 'none' }}>
                   <span style={{ fontSize: 13, color: '#1E40AF' }}>{f.name}</span>
@@ -330,7 +333,7 @@ export default function FoodSelector({ onChange }: Props) {
               type="text"
               value={search}
               onChange={e => { setSearch(e.target.value); setActiveCategory(null); }}
-              placeholder="ステーキ・焼き魚・唐揚げ…"
+              placeholder={tab === 'set' ? "カレー・牛丼・ラーメン…" : "ステーキ・焼き魚・唐揚げ…"}
               style={{ flex: 1, border: 'none', outline: 'none', background: 'transparent', color: '#1E293B', fontSize: 15 }}
             />
             {search && (
@@ -340,7 +343,7 @@ export default function FoodSelector({ onChange }: Props) {
 
           {!search && (
             <div style={{ display: 'flex', gap: 6, overflowX: 'auto', paddingBottom: 4, marginBottom: 8, scrollbarWidth: 'none' }}>
-              {allSideCategories.map(cat => (
+              {currentFoods.map(cat => (
                 <button key={cat} onClick={() => setActiveCategory(activeCategory === cat ? null : cat)} style={{
                   flexShrink: 0, padding: '6px 12px', borderRadius: 20, border: '1.5px solid',
                   borderColor: activeCategory === cat ? '#2563EB' : '#E2E8F0',
