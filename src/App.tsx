@@ -201,8 +201,8 @@ export default function App() {
               style={{
                 flex: 1, padding: '16px', borderRadius: 14,
                 border: `1.5px solid ${bg > 400 || (bg < 70 && bg > 0) ? '#EF4444' : '#CBD5E1'}`,
-                background: '#fff', color: '#1E293B', fontSize: 28, fontWeight: 700,
-                outline: 'none', textAlign: currentBg ? 'right' : 'center',
+                background: '#fff', color: '#1E293B', fontSize: 22, fontWeight: 700,
+                outline: 'none', textAlign: 'center',
                 boxShadow: '0 2px 6px rgba(0,0,0,0.07)',
               }}
             />
