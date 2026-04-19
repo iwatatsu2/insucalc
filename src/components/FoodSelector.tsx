@@ -137,10 +137,12 @@ export default function FoodSelector({ onChange }: Props) {
   const [search, setSearch] = useState('');
   const [activeCategory, setActiveCategory] = useState<string | null>(null);
 
-  const allSideCategories = Object.keys(foodData);
+  const STAPLE_CATEGORIES = ["主食", "おにぎり・パン", "菓子パン・軽食", "麺類", "丼・定食", "ファストフード", "コンビニ食品"];
+  const allSideCategories = Object.keys(foodData).filter(k => !STAPLE_CATEGORIES.includes(k));
 
+  const sideOnlyFoods = allSideCategories.flatMap(k => foodData[k]);
   const searchResults = search.trim()
-    ? Object.values(foodData).flat().filter(f =>
+    ? sideOnlyFoods.filter(f =>
         f.name.includes(search) || f.tags.some(t => t.includes(search))
       ).slice(0, 20)
     : activeCategory ? foodData[activeCategory] : [];

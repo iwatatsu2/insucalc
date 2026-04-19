@@ -99,7 +99,7 @@ export default function App() {
   );
 
   return (
-    <div style={{ background: '#DAE3F5', minHeight: '100vh', color: '#1E293B', fontFamily: "'Hiragino Sans', 'Noto Sans JP', -apple-system, sans-serif", maxWidth: 480, margin: '0 auto' }}>
+    <div style={{ background: '#DAE3F5', minHeight: '100vh', color: '#1E293B', fontFamily: "'Hiragino Sans', 'Noto Sans JP', -apple-system, sans-serif", maxWidth: 480, margin: '0 auto', overflowX: 'hidden' }}>
 
       <DrawerMenu isOpen={drawerOpen} onClose={() => setDrawerOpen(false)} onNavigate={setPage} currentPage={page} />
 
