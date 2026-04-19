@@ -199,11 +199,12 @@ export default function App() {
               placeholder="例: 180"
               inputMode="numeric"
               style={{
-                flex: 1, padding: '16px', borderRadius: 14,
+                flex: 1, minWidth: 0, padding: '16px', borderRadius: 14,
                 border: `1.5px solid ${bg > 400 || (bg < 70 && bg > 0) ? '#EF4444' : '#CBD5E1'}`,
                 background: '#fff', color: '#1E293B', fontSize: 22, fontWeight: 700,
                 outline: 'none', textAlign: 'center',
                 boxShadow: '0 2px 6px rgba(0,0,0,0.07)',
+                boxSizing: 'border-box' as const,
               }}
             />
             <span style={{ fontSize: 14, color: '#94A3B8', flexShrink: 0 }}>mg/dL</span>
