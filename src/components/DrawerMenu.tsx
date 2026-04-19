@@ -5,6 +5,7 @@ interface Props {
   onClose: () => void;
   onNavigate: (page: 'home' | 'history' | 'settings' | 'guide' | 'about') => void;
   currentPage: string;
+  onShowTerms?: () => void;
 }
 
 const MENU_ITEMS = [
@@ -18,7 +19,7 @@ const MENU_ITEMS = [
 const T1LIFE_URL = 'https://t1life.vercel.app';
 
 
-export default function DrawerMenu({ isOpen, onClose, onNavigate, currentPage }: Props) {
+export default function DrawerMenu({ isOpen, onClose, onNavigate, currentPage, onShowTerms }: Props) {
   // スクロール禁止
   useEffect(() => {
     if (isOpen) document.body.style.overflow = 'hidden';
@@ -106,8 +107,21 @@ export default function DrawerMenu({ isOpen, onClose, onNavigate, currentPage }:
           })}
         </div>
 
-        {/* フッター：T1Lifeリンク */}
+        {/* フッター */}
         <div style={{ padding: '16px 20px 32px', borderTop: '1px solid #F1F5F9', flexShrink: 0 }}>
+          {onShowTerms && (
+            <button
+              onClick={() => { onShowTerms(); onClose(); }}
+              style={{
+                width: '100%', background: 'none', border: 'none',
+                padding: '8px 0', marginBottom: 12,
+                fontSize: 12, color: '#94A3B8', cursor: 'pointer',
+                textAlign: 'center', textDecoration: 'underline',
+              }}
+            >
+              📄 利用規約・免責事項
+            </button>
+          )}
           <a href={T1LIFE_URL} target="_blank" rel="noopener noreferrer" style={{
             display: 'flex', alignItems: 'center', gap: 10,
             background: 'linear-gradient(135deg, #2563EB, #4F46E5)',

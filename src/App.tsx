@@ -7,6 +7,7 @@ import GuidePage from './components/GuidePage';
 import AboutPage from './components/AboutPage';
 import DrawerMenu from './components/DrawerMenu';
 import HypoPanel from './components/HypoPanel';
+import ConsentScreen from './components/ConsentScreen';
 import { useSettings } from './hooks/useSettings';
 import { useHistory } from './hooks/useHistory';
 
@@ -35,9 +36,11 @@ export default function App() {
   const { settings, updateSettings } = useSettings();
   const { history, addEntry, updateEntry, deleteEntry, clearHistory } = useHistory();
 
+  const [consented, setConsented] = useState(() => !!localStorage.getItem('insucalc_consent'));
   const [page, setPage] = useState<Page>('home');
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [hypoOpen, setHypoOpen] = useState(false);
+  const [showTerms, setShowTerms] = useState(false);
 
   const [totalCarbs, setTotalCarbs] = useState(0);
   const [foodSummary, setFoodSummary] = useState<string[]>([]);
@@ -86,16 +89,18 @@ export default function App() {
     setResetKey(k => k + 1);
   };
 
+  if (!consented) return <ConsentScreen onAccept={() => setConsented(true)} />;
+
   // ガイド・About・設定・履歴はページとして表示
   if (page === 'guide') return (
     <PageWrapper>
-      <DrawerMenu isOpen={drawerOpen} onClose={() => setDrawerOpen(false)} onNavigate={setPage} currentPage="guide" />
+      <DrawerMenu isOpen={drawerOpen} onClose={() => setDrawerOpen(false)} onNavigate={setPage} onShowTerms={() => setShowTerms(true)} currentPage="guide" />
       <GuidePage onClose={() => setPage('home')} />
     </PageWrapper>
   );
   if (page === 'about') return (
     <PageWrapper>
-      <DrawerMenu isOpen={drawerOpen} onClose={() => setDrawerOpen(false)} onNavigate={setPage} currentPage="about" />
+      <DrawerMenu isOpen={drawerOpen} onClose={() => setDrawerOpen(false)} onNavigate={setPage} onShowTerms={() => setShowTerms(true)} currentPage="about" />
       <AboutPage onClose={() => setPage('home')} />
     </PageWrapper>
   );
@@ -103,7 +108,7 @@ export default function App() {
   return (
     <div style={{ background: '#DAE3F5', minHeight: '100vh', color: '#1E293B', fontFamily: "'Hiragino Sans', 'Noto Sans JP', -apple-system, sans-serif", maxWidth: 480, margin: '0 auto', overflowX: 'hidden' }}>
 
-      <DrawerMenu isOpen={drawerOpen} onClose={() => setDrawerOpen(false)} onNavigate={setPage} currentPage={page} />
+      <DrawerMenu isOpen={drawerOpen} onClose={() => setDrawerOpen(false)} onNavigate={setPage} onShowTerms={() => setShowTerms(true)} currentPage={page} />
 
       {/* ヘッダー */}
       <header style={{
@@ -349,6 +354,7 @@ export default function App() {
         <HistoryPanel history={history} onUpdate={updateEntry} onDelete={deleteEntry} onClear={clearHistory} onClose={() => setPage('home')} />
       )}
       {hypoOpen && <HypoPanel onClose={() => setHypoOpen(false)} />}
+      {showTerms && <ConsentScreen onAccept={() => setShowTerms(false)} viewOnly />}
     </div>
   );
 }
