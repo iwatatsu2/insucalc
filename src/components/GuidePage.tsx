@@ -202,8 +202,79 @@ const STEPS = [
     ),
   },
   {
-    id: 'disclaimer',
+    id: 'hypo-action',
     step: 11,
+    emoji: '🍬',
+    title: '低血糖時の対応マニュアル',
+    color: '#DC2626',
+    bg: '#FEF2F2',
+    border: '#FECACA',
+    body: (
+      <>
+        <P><strong>低血糖（70 mg/dL未満）</strong>を感じたら、まず補食。インスリンは打たない。</P>
+
+        <div style={{ background: '#FEF2F2', border: '1px solid #FECACA', borderRadius: 12, padding: '12px 14px', marginBottom: 10 }}>
+          <div style={{ fontSize: 11, fontWeight: 800, color: '#DC2626', marginBottom: 8 }}>主な症状</div>
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>
+            {['手の震え', '冷や汗', '動悸', '空腹感', '脱力感', 'ふらつき', '集中力低下', '視界がぼやける', 'イライラ'].map(s => (
+              <span key={s} style={{ background: '#fff', border: '1px solid #FECACA', borderRadius: 20, padding: '3px 10px', fontSize: 11, color: '#991B1B' }}>{s}</span>
+            ))}
+          </div>
+          <p style={{ fontSize: 11, color: '#991B1B', margin: '8px 0 0', lineHeight: 1.6 }}>
+            重症：意識がもうろう・けいれん → 周囲の人がグルカゴン注射 or 救急要請
+          </p>
+        </div>
+
+        <div style={{ fontSize: 12, fontWeight: 800, color: '#DC2626', marginBottom: 8 }}>ステップ1：ブドウ糖を摂取</div>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 6, marginBottom: 12 }}>
+          {[
+            { item: 'ブドウ糖タブレット', amount: '2〜3粒（10〜15g）', note: '最速。常時携帯推奨', best: true },
+            { item: 'ラムネ（森永）', amount: '10〜15粒（約10〜15g）', note: '主成分がブドウ糖。入手しやすい', best: true },
+            { item: 'ジュース（果汁100%）', amount: '150〜200mL', note: 'オレンジジュース等' },
+            { item: 'コーラ・サイダー', amount: '150mL', note: '砂糖入り。ダイエット版は不可' },
+            { item: '砂糖・角砂糖', amount: '大さじ1（約10g）', note: '水に溶かして飲む' },
+          ].map(r => (
+            <div key={r.item} style={{
+              background: r.best ? '#FEF2F2' : '#F8FAFC',
+              border: `1px solid ${r.best ? '#FECACA' : '#E2E8F0'}`,
+              borderRadius: 10, padding: '8px 12px',
+            }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <span style={{ fontSize: 13, fontWeight: 700, color: '#1E293B' }}>{r.item}</span>
+                <span style={{ fontSize: 12, fontWeight: 700, color: r.best ? '#DC2626' : '#2563EB' }}>{r.amount}</span>
+              </div>
+              <div style={{ fontSize: 10, color: '#64748B', marginTop: 2 }}>{r.note}</div>
+            </div>
+          ))}
+        </div>
+
+        <div style={{ fontSize: 12, fontWeight: 800, color: '#EA580C', marginBottom: 6 }}>ステップ2：15分待って再測定</div>
+        <div style={{ background: '#FFF7ED', border: '1px solid #FED7AA', borderRadius: 12, padding: '10px 14px', marginBottom: 12 }}>
+          <ul style={{ paddingLeft: 16, margin: 0, fontSize: 12, color: '#475569', lineHeight: 2.0 }}>
+            <li>15分後に血糖値を再測定する</li>
+            <li>まだ70未満 → もう一度同量の補食を摂取</li>
+            <li>70以上に回復 → 次の食事まで30分以上あれば追加で炭水化物15g（クラッカー等）</li>
+          </ul>
+        </div>
+
+        <div style={{ fontSize: 12, fontWeight: 800, color: '#7C3AED', marginBottom: 6 }}>子供の場合の目安</div>
+        <div style={{ background: '#F5F3FF', border: '1px solid #DDD6FE', borderRadius: 12, padding: '10px 14px' }}>
+          <ul style={{ paddingLeft: 16, margin: 0, fontSize: 12, color: '#475569', lineHeight: 2.0 }}>
+            <li>体重30kg未満：ブドウ糖 5〜10g（ラムネ5〜10粒）</li>
+            <li>体重30kg以上：大人と同じ 10〜15g</li>
+            <li>意識がある場合のみ口から補食。意識低下時は無理に飲ませない</li>
+          </ul>
+        </div>
+
+        <KeyPoint color="#DC2626" bg="#FEF2F2">
+          低血糖対応後の詳しい対処は担当医に確認してください。頻繁に低血糖が起きる場合はインスリン量の見直しが必要です。
+        </KeyPoint>
+      </>
+    ),
+  },
+  {
+    id: 'disclaimer',
+    step: 12,
     emoji: '🏥',
     title: '重要な注意事項',
     color: '#DC2626',

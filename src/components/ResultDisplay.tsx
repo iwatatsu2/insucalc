@@ -4,9 +4,11 @@ interface Props {
   totalBolus: number;
   currentBg: number;
   warning: string | null;
+  onHypoGuide?: () => void;
 }
 
-export default function ResultDisplay({ mealBolus, correctionBolus, totalBolus, currentBg, warning }: Props) {
+export default function ResultDisplay({ mealBolus, correctionBolus, totalBolus, currentBg, warning, onHypoGuide }: Props) {
+  const isHypo = currentBg > 0 && currentBg < 70;
   return (
     <div style={{
       background: '#fff', border: '1.5px solid #E2E8F0',
@@ -17,9 +19,20 @@ export default function ResultDisplay({ mealBolus, correctionBolus, totalBolus, 
         <div style={{
           background: '#FEF2F2', color: '#DC2626', border: '1px solid #FECACA',
           borderRadius: 12, padding: '10px 14px', marginBottom: 16,
-          fontSize: 13, fontWeight: 700, display: 'flex', alignItems: 'center', gap: 8,
+          fontSize: 13, fontWeight: 700,
         }}>
-          ⚠️ {warning}
+          <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+            ⚠️ {warning}
+          </div>
+          {isHypo && onHypoGuide && (
+            <button onClick={onHypoGuide} style={{
+              marginTop: 8, width: '100%', padding: '8px',
+              background: '#DC2626', color: '#fff', border: 'none',
+              borderRadius: 8, fontSize: 12, fontWeight: 700, cursor: 'pointer',
+            }}>
+              🍬 低血糖対応マニュアルを見る
+            </button>
+          )}
         </div>
       )}
 

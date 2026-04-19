@@ -224,6 +224,7 @@ export default function App() {
               totalBolus={totalBolus}
               currentBg={bg}
               warning={warning}
+              onHypoGuide={() => setPage('guide')}
             />
           </section>
         )}
