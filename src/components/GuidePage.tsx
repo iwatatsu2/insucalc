@@ -6,11 +6,57 @@ interface Props {
   onClose: () => void;
 }
 
-// ステップ順に整理（TDD → CIR → ISF → ベーサル → 目標血糖 → 食事ボーラス → 補正ボーラス → 合計 → 丸め → 警告 → 注意）
+// ステップ順に整理（インスリンの種類 → TDD → CIR → ISF → ベーサル → 目標血糖 → 食事ボーラス → 補正ボーラス → 合計 → 丸め → 警告 → 低血糖 → 注意）
 const STEPS = [
   {
-    id: 'tdd',
+    id: 'insulin-types',
     step: 1,
+    emoji: '💉',
+    title: 'インスリンの種類：ボーラスとベーサル',
+    color: '#0891B2',
+    bg: '#ECFEFF',
+    border: '#A5F3FC',
+    body: (
+      <>
+        <P>1型糖尿病のインスリン治療では、大きく分けて<strong>2種類のインスリン</strong>を使います。</P>
+
+        <div style={{ background: '#F0FDF4', border: '1px solid #BBF7D0', borderRadius: 12, padding: '12px 14px', marginBottom: 10 }}>
+          <div style={{ fontSize: 13, fontWeight: 800, color: '#16A34A', marginBottom: 6 }}>ボーラスインスリン（追加インスリン）</div>
+          <P>食事の炭水化物を処理したり、高血糖を補正するために<strong>食前に打つ</strong>インスリンです。速やかに効き始め、数時間で効果が切れます。</P>
+          <div style={{ fontSize: 12, fontWeight: 700, color: '#475569', marginBottom: 4 }}>超速効型インスリン</div>
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: 4, marginBottom: 8 }}>
+            {['ノボラピッド', 'ヒューマログ', 'アピドラ'].map(n => (
+              <span key={n} style={{ background: '#DCFCE7', border: '1px solid #BBF7D0', borderRadius: 20, padding: '3px 10px', fontSize: 11, color: '#166534', fontWeight: 600 }}>{n}</span>
+            ))}
+          </div>
+          <div style={{ fontSize: 12, fontWeight: 700, color: '#475569', marginBottom: 4 }}>超超速効型インスリン（より速く効く）</div>
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: 4 }}>
+            {['フィアスプ', 'ルムジェブ'].map(n => (
+              <span key={n} style={{ background: '#DBEAFE', border: '1px solid #BFDBFE', borderRadius: 20, padding: '3px 10px', fontSize: 11, color: '#1E40AF', fontWeight: 600 }}>{n}</span>
+            ))}
+          </div>
+        </div>
+
+        <div style={{ background: '#F8FAFC', border: '1px solid #E2E8F0', borderRadius: 12, padding: '12px 14px', marginBottom: 10 }}>
+          <div style={{ fontSize: 13, fontWeight: 800, color: '#64748B', marginBottom: 6 }}>ベーサルインスリン（基礎インスリン）</div>
+          <P>食事に関係なく、1日中一定量を補充する<strong>土台となるインスリン</strong>です。1日1〜2回、毎日決まった時間に打ちます。</P>
+          <div style={{ fontSize: 12, fontWeight: 700, color: '#475569', marginBottom: 4 }}>持効型インスリン</div>
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: 4 }}>
+            {['トレシーバ（デグルデク）', 'ランタス（グラルギン）', 'ランタスXR', 'レベミル（デテミル）'].map(n => (
+              <span key={n} style={{ background: '#F1F5F9', border: '1px solid #E2E8F0', borderRadius: 20, padding: '3px 10px', fontSize: 11, color: '#334155', fontWeight: 600 }}>{n}</span>
+            ))}
+          </div>
+        </div>
+
+        <KeyPoint color="#0891B2" bg="#ECFEFF">
+          このアプリが計算するのは<strong>ボーラスインスリン</strong>（食事・補正）のみです。ベーサルインスリンは担当医の指示通りに投与してください。
+        </KeyPoint>
+      </>
+    ),
+  },
+  {
+    id: 'tdd',
+    step: 2,
     emoji: '📊',
     title: 'TDD（1日総インスリン量）',
     color: '#0EA5E9',
@@ -26,7 +72,7 @@ const STEPS = [
   },
   {
     id: 'cir',
-    step: 2,
+    step: 3,
     emoji: '🔢',
     title: 'CIR（炭水化物/インスリン比）',
     color: '#16A34A',
@@ -45,7 +91,7 @@ const STEPS = [
   },
   {
     id: 'isf',
-    step: 3,
+    step: 4,
     emoji: '📉',
     title: 'ISF（インスリン感受性係数）',
     color: '#7C3AED',
@@ -64,7 +110,7 @@ const STEPS = [
   },
   {
     id: 'basal',
-    step: 4,
+    step: 5,
     emoji: '🕐',
     title: 'ベーサルインスリン（基礎インスリン）',
     color: '#64748B',
@@ -72,8 +118,8 @@ const STEPS = [
     border: '#E2E8F0',
     body: (
       <>
-        <P>食事に関わらず、1日中継続して補充する基礎的なインスリンです（グラルギン・デグルデクなど）。</P>
-        <P>1型糖尿病では膵臓がインスリンをほぼ分泌できないため、毎日定時に注射します。</P>
+        <P>ステップ1で紹介した<strong>持効型インスリン</strong>（トレシーバ、ランタス等）を1日1〜2回、毎日決まった時間に注射します。</P>
+        <P>TDDにはこのベーサル量も含まれます。ベーサル量が変わればTDDも変わるため、CIR・ISFにも影響します。</P>
         <KeyPoint color="#64748B" bg="#F1F5F9">
           このアプリが計算するのは食事・補正ボーラスのみです。ベーサルは担当医の指示に従って投与してください。
         </KeyPoint>
@@ -82,7 +128,7 @@ const STEPS = [
   },
   {
     id: 'target-bg',
-    step: 5,
+    step: 6,
     emoji: '🎯',
     title: '目標血糖値',
     color: '#2563EB',
@@ -100,7 +146,7 @@ const STEPS = [
   },
   {
     id: 'meal-bolus',
-    step: 6,
+    step: 7,
     emoji: '🍱',
     title: '食事ボーラス',
     color: '#16A34A',
@@ -119,7 +165,7 @@ const STEPS = [
   },
   {
     id: 'correction-bolus',
-    step: 7,
+    step: 8,
     emoji: '📈',
     title: '補正ボーラス',
     color: '#EA580C',
@@ -141,7 +187,7 @@ const STEPS = [
   },
   {
     id: 'total',
-    step: 8,
+    step: 9,
     emoji: '🧮',
     title: '合計ボーラス（このアプリの計算）',
     color: '#2563EB',
@@ -157,7 +203,7 @@ const STEPS = [
   },
   {
     id: 'rounding',
-    step: 9,
+    step: 10,
     emoji: '½',
     title: '0.5単位刻みの丸め',
     color: '#64748B',
@@ -174,7 +220,7 @@ const STEPS = [
   },
   {
     id: 'hypohyper',
-    step: 10,
+    step: 11,
     emoji: '⚠️',
     title: '血糖値の警告ライン',
     color: '#DC2626',
@@ -203,7 +249,7 @@ const STEPS = [
   },
   {
     id: 'hypo-action',
-    step: 11,
+    step: 12,
     emoji: '🍬',
     title: '低血糖時の対応マニュアル',
     color: '#DC2626',
@@ -274,7 +320,7 @@ const STEPS = [
   },
   {
     id: 'disclaimer',
-    step: 12,
+    step: 13,
     emoji: '🏥',
     title: '重要な注意事項',
     color: '#DC2626',
