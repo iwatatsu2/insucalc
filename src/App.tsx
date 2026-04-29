@@ -10,6 +10,7 @@ import HypoPanel from './components/HypoPanel';
 import ConsentScreen from './components/ConsentScreen';
 import { useSettings } from './hooks/useSettings';
 import { useHistory } from './hooks/useHistory';
+import InstallBanner from './components/InstallBanner';
 
 function roundToHalf(n: number): number {
   return Math.round(n * 2) / 2;
@@ -355,6 +356,7 @@ export default function App() {
       )}
       {hypoOpen && <HypoPanel onClose={() => setHypoOpen(false)} />}
       {showTerms && <ConsentScreen onAccept={() => setShowTerms(false)} viewOnly />}
+      <InstallBanner />
     </div>
   );
 }
