@@ -49,6 +49,7 @@ export default function App() {
   const [saved, setSaved] = useState(false);
   const [resetKey, setResetKey] = useState(0);
   const [mealTime, setMealTime] = useState<MealTime>(getMealTime());
+  const [bannerDismissed, setBannerDismissed] = useState(() => !!localStorage.getItem('insucalc_banner_confirmed'));
 
   const cirKey = `cir${mealTime.charAt(0).toUpperCase()}${mealTime.slice(1)}` as 'cirMorning' | 'cirNoon' | 'cirEvening';
   const cir = settings[cirKey];
@@ -150,6 +151,37 @@ export default function App() {
           🍬 低血糖？
         </button>
       </header>
+
+      {/* 注意バナー */}
+      {!bannerDismissed && (
+        <div style={{
+          background: '#FEF2F2', borderBottom: '2px solid #FECACA',
+          padding: '12px 16px', display: 'flex', alignItems: 'flex-start', gap: 10,
+        }}>
+          <span style={{ fontSize: 18, lineHeight: 1, flexShrink: 0, marginTop: 1 }}>⚠️</span>
+          <div style={{ flex: 1 }}>
+            <div style={{ fontSize: 12, fontWeight: 800, color: '#991B1B', marginBottom: 4 }}>
+              ご利用前に必ずご確認ください
+            </div>
+            <div style={{ fontSize: 11, color: '#7F1D1D', lineHeight: 1.7 }}>
+              このアプリは<strong>1型糖尿病の方</strong>がカーボカウントに基づくインスリン量を計算するためのツールです。
+              <strong>CIR（カーボ比）</strong>は炭水化物何gに対しインスリン1単位かを示す値、<strong>ISF（インスリン効果値）</strong>はインスリン1単位で血糖値が何mg/dL下がるかを示す値です。
+              これらは<strong>個人ごとに異なり</strong>、誤った設定のまま使用すると<strong>重大な低血糖や高血糖の原因</strong>になります。
+              設定画面の値が自分に合っているか、<strong>必ず主治医と一緒に確認</strong>してからご利用ください。
+            </div>
+          </div>
+          <button
+            onClick={() => { setBannerDismissed(true); localStorage.setItem('insucalc_banner_confirmed', '1'); }}
+            style={{
+              background: '#991B1B', color: '#fff', border: 'none', cursor: 'pointer',
+              borderRadius: 8, padding: '6px 12px', fontSize: 11, fontWeight: 700,
+              flexShrink: 0, whiteSpace: 'nowrap',
+            }}
+          >
+            確認しました
+          </button>
+        </div>
+      )}
 
       <div style={{ padding: '16px 16px 100px' }}>
         {/* 時間帯セレクター */}
