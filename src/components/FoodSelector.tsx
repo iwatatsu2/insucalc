@@ -137,7 +137,7 @@ export default function FoodSelector({ onChange }: Props) {
   const [search, setSearch] = useState('');
   const [activeCategory, setActiveCategory] = useState<string | null>(null);
 
-  const SET_CATEGORIES = ["主食", "おにぎり・パン", "菓子パン・軽食", "麺類", "丼・定食", "ファストフード", "コンビニ食品"];
+  const SET_CATEGORIES = ["主食", "おにぎり・パン", "菓子パン・軽食", "麺類", "丼・定食", "ファストフード", "コンビニ食品", "飲茶・点心"];
   const allSideCategories = Object.keys(foodData).filter(k => !SET_CATEGORIES.includes(k));
   const allSetCategories = SET_CATEGORIES.filter(k => foodData[k]);
 

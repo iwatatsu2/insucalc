@@ -101,6 +101,7 @@ const CATEGORY_RANGES: Record<string, { min: number; max: number }> = {
   '丼・定食': { min: 50, max: 120 },
   'ファストフード': { min: 10, max: 100 },
   'コンビニ食品': { min: 1, max: 90 },
+  '飲茶・点心': { min: 5, max: 80 },
   'スイーツ': { min: 5, max: 60 },
   '飲料': { min: 0, max: 60 },
   '果物': { min: 10, max: 45 },
@@ -170,6 +171,15 @@ describe('カテゴリ別 炭水化物量レンジチェック', () => {
       }
     });
   }
+});
+
+describe('飲茶・点心', () => {
+  it('飲茶カテゴリがあり、主要な点心が揃っている', () => {
+    const names = (foodData['飲茶・点心'] || []).map(f => f.name).join(' ');
+    for (const key of ['小籠包', '焼売', '海老蒸し餃子', '春巻き', '中華ちまき', 'ごま団子', 'エッグタルト', '杏仁豆腐', '中華粥']) {
+      expect(names).toContain(key);
+    }
+  });
 });
 
 describe('異常値検出', () => {

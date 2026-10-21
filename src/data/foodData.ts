@@ -174,6 +174,27 @@ export const foodData: Record<string, FoodItem[]> = {
     // ヨーグルト（全脂・無糖）: 4.9g/100g（八訂）
     { name: "ヨーグルト（無糖）1個（100g）", carbs: 5, category: "コンビニ食品", tags: ["コンビニ", "低糖質"], source: "八訂" },
   ],
+  "飲茶・点心": [
+    // 点心は皮（小麦粉・米粉・浮き粉）とあんの積算による推計。1せいろ／1皿＝飲茶店の標準的な1オーダー量
+    // 皮の多い蒸し物は1個あたり約4〜6g、甘い点心・ちまき・粥は1品で20g超になりやすい
+    { name: "小籠包 1せいろ（4個）", carbs: 18, category: "飲茶・点心", tags: ["中華", "飲茶", "外食"], source: "推計" },
+    { name: "焼売 1せいろ（3個）", carbs: 12, category: "飲茶・点心", tags: ["中華", "飲茶", "外食"], source: "推計" },
+    { name: "海老蒸し餃子 1せいろ（3個）", carbs: 15, category: "飲茶・点心", tags: ["中華", "飲茶", "外食"], source: "推計" },
+    { name: "水餃子 4個", carbs: 18, category: "飲茶・点心", tags: ["中華", "飲茶", "外食"], source: "推計" },
+    { name: "焼き小籠包 4個", carbs: 30, category: "飲茶・点心", tags: ["中華", "飲茶", "外食"], source: "推計" },
+    { name: "ニラ饅頭 3個", carbs: 20, category: "飲茶・点心", tags: ["中華", "飲茶", "外食"], source: "推計" },
+    { name: "春巻き 1本（点心）", carbs: 10, category: "飲茶・点心", tags: ["中華", "飲茶", "外食"], source: "推計" },
+    { name: "大根餅 2切れ", carbs: 18, category: "飲茶・点心", tags: ["中華", "飲茶", "外食"], source: "推計" },
+    { name: "腸粉（エビ）1皿", carbs: 26, category: "飲茶・点心", tags: ["中華", "飲茶", "外食"], source: "推計" },
+    { name: "叉焼まん 1個（60g）", carbs: 25, category: "飲茶・点心", tags: ["中華", "飲茶", "外食"], source: "推計" },
+    { name: "中華ちまき 1個（100g）", carbs: 35, category: "飲茶・点心", tags: ["中華", "飲茶", "外食", "高糖質"], source: "推計" },
+    { name: "蓮の葉ちまき（糯米鶏）1個", carbs: 55, category: "飲茶・点心", tags: ["中華", "飲茶", "外食", "高糖質"], source: "推計" },
+    { name: "中華粥 1杯（300g）", carbs: 30, category: "飲茶・点心", tags: ["中華", "飲茶", "外食"], source: "推計" },
+    { name: "ごま団子 2個", carbs: 27, category: "飲茶・点心", tags: ["中華", "飲茶", "スイーツ"], source: "推計" },
+    { name: "エッグタルト 1個", carbs: 15, category: "飲茶・点心", tags: ["中華", "飲茶", "スイーツ"], source: "推計" },
+    { name: "マンゴープリン 1個（100g）", carbs: 18, category: "飲茶・点心", tags: ["中華", "飲茶", "スイーツ"], source: "推計" },
+    { name: "杏仁豆腐 1個（100g）", carbs: 18, category: "飲茶・点心", tags: ["中華", "飲茶", "スイーツ"], source: "推計" },
+  ],
   "スイーツ": [
     // ショートケーキ: 44.4g/100g（八訂）。1個=100g
     { name: "ショートケーキ 1個（100g）", carbs: 44, category: "スイーツ", tags: ["スイーツ", "高糖質"], source: "八訂" },
