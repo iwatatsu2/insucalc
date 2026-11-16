@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import FoodSelector from './components/FoodSelector';
 import ResultDisplay from './components/ResultDisplay';
 import SettingsPanel from './components/SettingsPanel';
@@ -11,6 +11,7 @@ import ConsentScreen from './components/ConsentScreen';
 import { useSettings } from './hooks/useSettings';
 import { useHistory } from './hooks/useHistory';
 import InstallBanner from './components/InstallBanner';
+import { parseCarbHandoff, handoffToFood, clearHandoffParams } from './handoff';
 
 function roundToHalf(n: number): number {
   return Math.round(n * 2) / 2;
@@ -43,8 +44,12 @@ export default function App() {
   const [hypoOpen, setHypoOpen] = useState(false);
   const [showTerms, setShowTerms] = useState(false);
 
-  const [totalCarbs, setTotalCarbs] = useState(0);
-  const [foodSummary, setFoodSummary] = useState<string[]>([]);
+  // 外食カーボ手帖から渡されたカーボ（初回だけ）
+  const [handoff, setHandoff] = useState(() => parseCarbHandoff(window.location.search));
+  useEffect(() => { clearHandoffParams(); }, []);
+
+  const [totalCarbs, setTotalCarbs] = useState(() => handoff?.carbs ?? 0);
+  const [foodSummary, setFoodSummary] = useState<string[]>(() => handoff ? [handoffToFood(handoff).name] : []);
   const [currentBg, setCurrentBg] = useState<string>('');
   const [saved, setSaved] = useState(false);
   const [resetKey, setResetKey] = useState(0);
@@ -88,6 +93,7 @@ export default function App() {
     setFoodSummary([]);
     setCurrentBg('');
     setSaved(false);
+    setHandoff(null);
     setResetKey(k => k + 1);
   };
 
@@ -227,8 +233,15 @@ export default function App() {
             <span style={{ background: '#2563EB', color: '#fff', borderRadius: '50%', width: 20, height: 20, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', fontSize: 11, fontWeight: 900, flexShrink: 0 }}>1</span>
             食事を入力
           </h2>
+          {handoff && (
+            <div role="status" style={{ background: '#FFF7ED', border: '1.5px solid #FDBA74', borderRadius: 14, padding: '10px 12px', marginBottom: 10, fontSize: 12, lineHeight: 1.6, color: '#7C2D12' }}>
+              <div style={{ fontWeight: 700 }}>🥢 外食カーボ手帖から「{handoff.name}」{handoff.carbs}g を入れました</div>
+              <div>手帖の値は目安です。お店の公式値も確認し、主食やおかずを足す場合はこの下で追加してください。</div>
+            </div>
+          )}
           <FoodSelector
             key={resetKey}
+            initialSides={handoff ? [handoffToFood(handoff)] : undefined}
             onChange={(carbs, summary) => { setTotalCarbs(carbs); setFoodSummary(summary); }}
           />
         </section>

@@ -123,17 +123,18 @@ function WheelPicker({
 // ---- メインコンポーネント ----
 interface Props {
   onChange: (totalCarbs: number, summary: string[]) => void;
+  initialSides?: FoodItem[];
 }
 
-export default function FoodSelector({ onChange }: Props) {
-  const [tab, setTab] = useState<'staple' | 'side' | 'set'>('staple');
+export default function FoodSelector({ onChange, initialSides }: Props) {
+  const [tab, setTab] = useState<'staple' | 'side' | 'set'>(initialSides?.length ? 'side' : 'staple');
 
   // 主食: key → grams (0=未選択)
   const [stapleGrams, setStapleGrams] = useState<Record<StapleKey, number>>({ rice: 0, bread: 0, noodle: 0 });
   // 開いているピッカーのキー
   const [openPicker, setOpenPicker] = useState<StapleKey | null>(null);
 
-  const [selectedSides, setSelectedSides] = useState<FoodItem[]>([]);
+  const [selectedSides, setSelectedSides] = useState<FoodItem[]>(initialSides ?? []);
   const [search, setSearch] = useState('');
   const [activeCategory, setActiveCategory] = useState<string | null>(null);
 
