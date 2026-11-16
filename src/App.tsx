@@ -11,7 +11,7 @@ import ConsentScreen from './components/ConsentScreen';
 import { useSettings } from './hooks/useSettings';
 import { useHistory } from './hooks/useHistory';
 import InstallBanner from './components/InstallBanner';
-import { parseCarbHandoff, handoffToFood, clearHandoffParams } from './handoff';
+import { parseCarbHandoff, handoffToFood, clearHandoffParams, type CarbHandoff } from './handoff';
 
 function roundToHalf(n: number): number {
   return Math.round(n * 2) / 2;
@@ -45,11 +45,13 @@ export default function App() {
   const [showTerms, setShowTerms] = useState(false);
 
   // 外食カーボ手帖から渡されたカーボ（初回だけ）
-  const [handoff, setHandoff] = useState(() => parseCarbHandoff(window.location.search));
+  // リンクの値は誰でも作れるので、本人が「入れる」を押すまで計算に入れない
+  const [pendingHandoff, setPendingHandoff] = useState(() => parseCarbHandoff(window.location.search));
+  const [handoff, setHandoff] = useState<CarbHandoff | null>(null);
   useEffect(() => { clearHandoffParams(); }, []);
 
-  const [totalCarbs, setTotalCarbs] = useState(() => handoff?.carbs ?? 0);
-  const [foodSummary, setFoodSummary] = useState<string[]>(() => handoff ? [handoffToFood(handoff).name] : []);
+  const [totalCarbs, setTotalCarbs] = useState(0);
+  const [foodSummary, setFoodSummary] = useState<string[]>([]);
   const [currentBg, setCurrentBg] = useState<string>('');
   const [saved, setSaved] = useState(false);
   const [resetKey, setResetKey] = useState(0);
@@ -94,6 +96,16 @@ export default function App() {
     setCurrentBg('');
     setSaved(false);
     setHandoff(null);
+    setPendingHandoff(null);
+    setResetKey(k => k + 1);
+  };
+
+  const acceptHandoff = () => {
+    if (!pendingHandoff) return;
+    setHandoff(pendingHandoff);
+    setPendingHandoff(null);
+    setTotalCarbs(pendingHandoff.carbs);
+    setFoodSummary([handoffToFood(pendingHandoff).name]);
     setResetKey(k => k + 1);
   };
 
@@ -233,10 +245,20 @@ export default function App() {
             <span style={{ background: '#2563EB', color: '#fff', borderRadius: '50%', width: 20, height: 20, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', fontSize: 11, fontWeight: 900, flexShrink: 0 }}>1</span>
             食事を入力
           </h2>
+          {pendingHandoff && (
+            <div role="dialog" aria-label="リンクで受け取ったカーボ量" style={{ background: '#FFF7ED', border: '1.5px solid #FDBA74', borderRadius: 14, padding: '12px', marginBottom: 10, fontSize: 12, lineHeight: 1.6, color: '#7C2D12' }}>
+              <div style={{ fontWeight: 700, fontSize: 13 }}>🥢 リンクで「{pendingHandoff.name}」{pendingHandoff.carbs}g を受け取りました</div>
+              <div>外食カーボ手帖などから開いた場合の目安の値です。この量で入れますか？</div>
+              <div style={{ display: 'flex', gap: 8, marginTop: 8 }}>
+                <button onClick={acceptHandoff} style={{ flex: 2, padding: '10px', borderRadius: 10, border: 'none', background: '#EA580C', color: '#fff', fontSize: 14, fontWeight: 700, cursor: 'pointer' }}>{pendingHandoff.carbs}g を入れる</button>
+                <button onClick={() => setPendingHandoff(null)} style={{ flex: 1, padding: '10px', borderRadius: 10, border: '1.5px solid #FDBA74', background: '#fff', color: '#7C2D12', fontSize: 14, fontWeight: 700, cursor: 'pointer' }}>入れない</button>
+              </div>
+            </div>
+          )}
           {handoff && (
             <div role="status" style={{ background: '#FFF7ED', border: '1.5px solid #FDBA74', borderRadius: 14, padding: '10px 12px', marginBottom: 10, fontSize: 12, lineHeight: 1.6, color: '#7C2D12' }}>
-              <div style={{ fontWeight: 700 }}>🥢 外食カーボ手帖から「{handoff.name}」{handoff.carbs}g を入れました</div>
-              <div>手帖の値は目安です。お店の公式値も確認し、主食やおかずを足す場合はこの下で追加してください。</div>
+              <div style={{ fontWeight: 700 }}>🥢「{handoff.name}」{handoff.carbs}g を入れました</div>
+              <div>目安の値です。お店の公式値も確認し、主食やおかずを足す場合はこの下で追加してください。</div>
             </div>
           )}
           <FoodSelector
